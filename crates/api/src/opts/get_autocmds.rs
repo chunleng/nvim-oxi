@@ -1,7 +1,7 @@
 use types::{Array, Object};
 
-use crate::Buffer;
 use crate::trait_utils::StringOrInt;
+use crate::Buffer;
 
 /// Options passed to [`get_autocmds()`](crate::get_autocmds).
 #[derive(Clone, Debug, Default, macros::OptsBuilder)]
@@ -55,4 +55,8 @@ pub struct GetAutocmdsOpts {
     #[cfg(feature = "neovim-0-12")]
     #[builder(argtype = "Buffer", inline = "{0}.into()")]
     buf: Object,
+
+    /// Get the autocommand with the specified id.
+    #[builder(argtype = "types::Integer")]
+    id: types::Integer,
 }

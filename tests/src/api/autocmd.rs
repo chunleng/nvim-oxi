@@ -1,5 +1,5 @@
 use all_asserts::*;
-use nvim_oxi::api::{self, Buffer, opts::*};
+use nvim_oxi::api::{self, opts::*, Buffer};
 
 #[nvim_oxi::test]
 fn clear_autocmds_current_buf() {
@@ -114,6 +114,14 @@ fn exec_autocmds() {
 fn get_autocmds() {
     let autocmds =
         api::get_autocmds(&Default::default()).expect("couldn't get autocmds");
+    assert_lt!(0, autocmds.collect::<Vec<_>>().len());
+}
+
+#[nvim_oxi::test]
+fn get_autocmds_by_id() {
+    let opts = GetAutocmdsOpts::builder().id(1).build();
+    let autocmds =
+        api::get_autocmds(&opts).expect("couldn't get autocmds by id");
     assert_lt!(0, autocmds.collect::<Vec<_>>().len());
 }
 
