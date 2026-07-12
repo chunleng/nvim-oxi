@@ -12,8 +12,17 @@ pub struct CreateAutocmdOpts {
     mask: u64,
 
     /// A specific `Buffer` for buffer-local autocommands.
+    #[cfg_attr( // On 0.12 and Nightly.
+        feature = "neovim-0-12",
+        deprecated = "NVIM v0.12.2 soft deprecates `buffer` for `CreateAutocmdOpts`, use `buf` instead",
+    )]
     #[builder(argtype = "Buffer", inline = "{0}.0")]
     buffer: types::BufHandle,
+
+    /// Alias for [`buffer`](CreateAutocmdOptsBuilder::buffer).
+    #[cfg(feature = "neovim-0-12")]
+    #[builder(argtype = "Buffer", inline = "{0}.0")]
+    buf: types::BufHandle,
 
     /// Callback to execute when the autocommand is triggered. Cannot be used
     /// together with `command`.
